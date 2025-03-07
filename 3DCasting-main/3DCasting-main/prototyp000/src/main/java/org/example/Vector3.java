@@ -1,10 +1,10 @@
 package org.example;
 
-public class Vector3f
+public class Vector3
 {
-    float x, y, z;
+    int x, y, z;
 
-    public Vector3f(float x, float y, float z)
+    public Vector3(int x, int y, int z)
     {
         this.x = x;
         this.y = y;

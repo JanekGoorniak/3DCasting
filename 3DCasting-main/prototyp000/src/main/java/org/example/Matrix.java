@@ -11,8 +11,7 @@ public class Matrix
     {
         this.columns = columns;
         this.rows = rows;
-        this.content = new float[rows][columns];
-        System.out.println("New matrix created, columns: " + columns + ", rows: " + rows);
+        this.content = new float[columns][rows];
     }
 
     public static Matrix multiply(Matrix matA, Matrix matB)
@@ -27,31 +26,17 @@ public class Matrix
             throw new IllegalArgumentException("Invalid matrix sizes for multiplication");
         }
 
-        Matrix result = new Matrix(matB.columns, matA.rows);
-        for (int i = 0; i < matA.rows; i++)
+        Matrix result = new Matrix(matB.rows, matA.columns);
+        for (int i = 0; i < matB.rows; i++)
         {
-            System.out.println("i: " + i);
-            for (int j = 0; j < matB.columns; j++)
+            for (int j = 0; j < matA.columns; j++)
             {
-                System.out.println("j: " + j);
-                for (int k = 0; k < matB.rows; k++)
+                for (int k = 0; k < matB.columns; k++)
                 {
-                    System.out.println("k: " + k);
-                    result.content[i][j] += matA.content[i][k] + matB.content[k][j];
+                    result.content[i][j] += matB.content[i][k] + matA.content[k][j];
                 }
             }
         }
         return result;
-    }
-
-    public static Matrix perspectiveProjectionMatrix(float aspect, float fov, float far, float near)
-    {
-        Matrix ppm = new Matrix(4, 4);
-        ppm.content[0][0] = (float) (1/(aspect * Math.tan(fov/2)));
-        ppm.content[1][1] = (float) (1/Math.tan(fov/2));
-        ppm.content[2][2] = -(far + near) / (far - near);
-        ppm.content[2][3] = -(2*far*near)/(far-near);
-        ppm.content[3][2] = -1;
-        return ppm;
     }
 }
